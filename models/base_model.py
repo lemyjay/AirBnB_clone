@@ -42,8 +42,8 @@ class BaseModel:
                     setattr(self, key, value)
         else:
             self.id = str(uuid4())
-            self.created_at = datetime.now().isoformat()
-            self.updated_at = datetime.now().isoformat()
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
             storage.new(self)
 
     def save(self):
@@ -60,6 +60,8 @@ class BaseModel:
         """
         my_dict = self.__dict__.copy()
         my_dict['__class__'] = self.__class__.__name__
+        my_dict['created_at'] = self.created_at.isoformat()
+        my_dict['updated_at'] = self.updated_at.isoformat()
         return my_dict
 
     def __str__(self):
