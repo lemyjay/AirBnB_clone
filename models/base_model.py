@@ -8,10 +8,20 @@ class BaseModel:
     """ BaseModel that defines all common
     attributes/methods for other classes """
 
-    def __init__(self):
-        self.id = str(uuid4())
-        self.created_at = datetime.now().isoformat()
-        self.updated_at = datetime.now().isoformat()
+    def __init__(self, *args, **kwargs):
+        if (kwargs):
+            """ re-create an instance with kwargs dictionary representation."""
+            date_format = "%Y-%m-%dT%H:%M:%S.%f"
+            for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+                if ((key == "updated_at") or (key == "created_at")):
+                    value = datetime.strptime(value, date_format)
+                setattr(self, key, value)
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now().isoformat()
+            self.updated_at = datetime.now().isoformat()
 
     def save(self):
         """ update public instance updated_at with current time """
