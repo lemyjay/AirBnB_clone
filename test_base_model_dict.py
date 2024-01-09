@@ -22,3 +22,5 @@ print(type(my_new_model.created_at))
 
 print("--")
 print(my_model is my_new_model)
+# My own test I included to see if their attributes are the same
+print(my_model.__dict__ == my_new_model.__dict__)
