@@ -4,11 +4,12 @@ module that defines BaseModel class
 """
 from uuid import uuid4
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
     """
-    BaseModel that defines all common attributes/methods
+    The BaseModel class defines all common attributes/methods
     for other classes
 
     Public instance attributes:
@@ -43,12 +44,14 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now().isoformat()
             self.updated_at = datetime.now().isoformat()
+            storage.new(self)
 
     def save(self):
         """
         Update public instance updated_at with current time
         """
         self.updated_at = datetime.now().isoformat()
+        storage.save()
 
     def to_dict(self):
         """
