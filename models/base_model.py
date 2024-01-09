@@ -50,7 +50,7 @@ class BaseModel:
         """
         Update public instance updated_at with current time
         """
-        self.updated_at = datetime.now().isoformat()
+        self.updated_at = datetime.now()
         storage.save()
 
     def to_dict(self):
