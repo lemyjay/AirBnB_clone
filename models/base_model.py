@@ -28,8 +28,7 @@ class BaseModel:
         Returns the dictornary representation of BaseModel
         instance with class name included
         """
-        my_dict = dict()
-        my_dict = self.__dict__
+        my_dict = self.__dict__.copy()
         my_dict['__class__'] = self.__class__.__name__
         return my_dict
 
