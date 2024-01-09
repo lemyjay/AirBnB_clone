@@ -12,7 +12,6 @@ class BaseModel:
     The BaseModel class defines all common attributes/methods
     for other classes
 
-
     Public instance attributes:
         id (str): A unique identifier for the instance.
         created_at (datetime): The timestamp of when the instance was created.
