@@ -15,13 +15,14 @@ class BaseModel:
 
     Public instance attributes:
         id (str): A unique identifier for the instance.
-        created_at (datetime): The timestamp of when the instance was created.
-        updated_at (datetime): The timestamp of the last update to the instance.
+        created_at (datetime): Timestamp of when the instance was created.
+        updated_at (datetime): Timestamp of the last update to the instance.
 
     Methods:
         __int__(self, *args, **kwargs): The class constructor.
         save(self): Updates public instance "updated_at" with current time
-        to_dict(self): Returns the dictionary representation the Class with class name included
+        to_dict(self): Returns the dictionary representation the Class with
+                        class name included
         __str__: Returns the string representation of BaseModel instance
     """
 
@@ -37,8 +38,12 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == '__class__':
                     continue
-                if key in ('created_at', 'updated_at') and isinstance(value, str):
-                    setattr(self, key, datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f'))
+                if key in ('created_at', 'updated_at')
+                and isinstance(value, str):
+                    setattr(
+                            self, key,
+                            datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                            )
                 else:
                     setattr(self, key, value)
         else:
