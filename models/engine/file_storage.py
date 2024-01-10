@@ -5,6 +5,7 @@ module that defines the FileStorage class
 import json
 #from datetime import datetime
 #import models
+from models.base_model import BaseModel
 
 
 
