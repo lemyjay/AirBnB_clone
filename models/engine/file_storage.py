@@ -57,7 +57,9 @@ class FileStorage:
                 data = json.load(file)
                 for key, obj_data in data.items():
                     class_name, _ = key.split('.')
+                    print(f"here is the class name {class_name}")
                     class_type = globals().get(class_name)
+                    print(f"here is the class type {class_type}")
                     if class_type:
                         obj_data['created_at'] = datetime.strptime(
                             obj_data['created_at'], '%Y-%m-%dT%H:%M:%S.%f'
