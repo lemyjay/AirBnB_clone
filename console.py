@@ -8,7 +8,7 @@ import cmd
 class HBNBCommand(cmd.Cmd):
     """
     Command interpreter class
-    
+
     Attributes:
     - prompt (str): The custom prompt for the command interpreter.
 
@@ -17,7 +17,7 @@ class HBNBCommand(cmd.Cmd):
     - do_EOF(arg): Implements the 'EOF' command to exit the program.
     - emptyline(): Does nothing on an empty line.
     """
-    
+
     prompt = "(hbnb) "
 
     def do_quit(self, arg):
@@ -32,6 +32,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """Do nothing on empty line"""
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
