@@ -59,6 +59,7 @@ class FileStorage:
                 for key, obj_data in data.items():
                     class_name, _ = key.split('.')
                     class_type = type(class_name)
+                    print(f"here is the class type {class_type}")
                     if class_type:
                         obj_data['created_at'] = datetime.strptime(
                             obj_data['created_at'], '%Y-%m-%dT%H:%M:%S.%f'
