@@ -4,7 +4,7 @@ module that defines the FileStorage class
 """
 import json
 from datetime import datetime
-import models
+from models.base_model import BaseModel
 
 
 
@@ -59,9 +59,10 @@ class FileStorage:
                 data = json.load(file)
                 for key, obj_data in data.items():
                     class_name, _ = key.split('.')
-                    print(f"here is the class name {class_name}")
-                    class_type = getattr(models, class_name, None)
-                    print(f"here is the class type {class_type}")
+                    if class_name == 'BaseModel':
+                        class_type = BaseModel
+                    else:
+                        class_type = None
                     if class_type:
                         obj_data['created_at'] = datetime.strptime(
                             obj_data['created_at'], '%Y-%m-%dT%H:%M:%S.%f'
