@@ -3,9 +3,8 @@
 module that defines the FileStorage class
 """
 import json
-#from datetime import datetime
-#import models
-from models.base_model import BaseModel
+from datetime import datetime
+import models
 
 
 
@@ -43,22 +42,18 @@ class FileStorage:
     def save(self):
         """
         Serializes __objects to the JSON file (path: __file_path).
-        
+        """
         serialized_objects = {}
         for key, obj in self.__objects.items():
             serialized_objects[key] = obj.to_dict()
 
         with open(self.__file_path, mode='w', encoding='utf-8') as file:
             json.dump(serialized_objects, file)
-        """
-        objects_dict = {key: obj.to_dict() for key, obj in self.__objects.items()}
-        with open(self.__file_path, 'w', encoding='utf-8') as file:
-            json.dump(objects_dict, file)
 
     def reload(self):
         """
         Deserializes the JSON file to __objects.
-        
+        """
         try:
             with open(self.__file_path, mode='r', encoding='utf-8') as file:
                 data = json.load(file)
@@ -75,15 +70,5 @@ class FileStorage:
                         obj = class_type(**obj_data)
                         # Directly update __objects dictionary
                         self.__objects[key] = obj
-        except FileNotFoundError:
-            pass
-        """
-        try:
-            with open(self.__file_path, 'r', encoding='utf-8') as file:
-                objects_dict = json.load(file)
-                for key, obj_dict in objects_dict.items():
-                    cls_name, _ = key.split('.')
-                    obj = globals()[cls_name](**obj_dict)
-                    self.new(obj)
         except FileNotFoundError:
             pass

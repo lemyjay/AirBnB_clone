@@ -4,13 +4,14 @@ module that defines BaseModel class
 """
 from uuid import uuid4
 from datetime import datetime
-#from models import storage
+from models import storage
 
 
 class BaseModel:
     """
     The BaseModel class defines all common attributes/methods
     for other classes
+
 
     Public instance attributes:
         id (str): A unique identifier for the instance.
