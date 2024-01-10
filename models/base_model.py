@@ -38,8 +38,8 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == '__class__':
                     continue
-                if key in ('created_at', 'updated_at') \
-                and isinstance(value, str):
+                if key in ('created_at', 'updated_at') and\
+                        isinstance(value, str):
                     setattr(
                             self, key,
                             datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
