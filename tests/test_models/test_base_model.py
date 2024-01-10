@@ -3,8 +3,8 @@
 Unittest for the BaseModel module (Base Class)
 """
 import unittest
-from models.base_model import BaseModel
 from datetime import datetime
+from models.base_model import BaseModel
 from models import storage
 
 
