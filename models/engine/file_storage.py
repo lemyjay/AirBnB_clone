@@ -67,5 +67,6 @@ class FileStorage:
                         )
                         obj = class_type(**obj_data)
                         self.__objects[key] = obj  # Update instead of overwrite
+                print("__objects after reload:", self.__objects)
         except FileNotFoundError:
             pass
