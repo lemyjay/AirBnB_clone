@@ -38,7 +38,7 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == '__class__':
                     continue
-                if key in ('created_at', 'updated_at')
+                if key in ('created_at', 'updated_at') \
                 and isinstance(value, str):
                     setattr(
                             self, key,
