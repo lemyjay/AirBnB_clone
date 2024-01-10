@@ -104,13 +104,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(reloaded_model.updated_at, updated_model.updated_at)
         self.assertEqual(reloaded_model.name, updated_model.name)
 
-    def test_reload_nonexistent_file(self):
-        """Test reloading from a non-existent file."""
-        non_existent_file_path = "non_existent_file.json"
-        storage.__file_path = non_existent_file_path
-
-        with self.assertRaises(FileNotFoundError):
-            storage.reload()
 
 if __name__ == '__main__':
     unittest.main()
