@@ -4,7 +4,7 @@ module that defines the FileStorage class
 """
 import json
 from datetime import datetime
-
+import importlib
 
 
 class FileStorage:
@@ -58,7 +58,7 @@ class FileStorage:
                 data = json.load(file)
                 for key, obj_data in data.items():
                     class_name, _ = key.split('.')
-                    module = __import__('models', fromlist=[class_name])
+                    module = importlib.import_module(f'models.{class_name}')
                     class_type = getattr(module, class_name)
                     print(f"here is the class type {class_type}")
                     if class_type:
