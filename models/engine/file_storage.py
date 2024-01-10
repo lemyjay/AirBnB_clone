@@ -55,9 +55,8 @@ class FileStorage:
         try:
             with open(self.__file_path, mode='r', encoding='utf-8') as file:
                 data = json.load(file)
-                print("Loaded data from file:", data)  # Add this line
                 for key, obj_data in data.items():
-                    class_name, obj_id = key.split('.')
+                    class_name, _ = key.split('.')
                     class_type = globals().get(class_name)
                     if class_type:
                         obj_data['created_at'] = datetime.strptime(
@@ -67,12 +66,7 @@ class FileStorage:
                             obj_data['updated_at'], '%Y-%m-%dT%H:%M:%S.%f'
                         )
                         obj = class_type(**obj_data)
-                        #new_key = "{}.{}".format(class_name, obj_id)
-                        #self.__objects[new_key] = obj  # Update instead of overwrite
-                        print(f"Loaded key: {key}")
-                        print(f"Loaded object: {obj}")
+                        # Directly update __objects dictionary
                         self.__objects[key] = obj
-                        print("Added to __objects:", new_key, obj)  # Add this line
-            print("__objects after reload:", self.__objects)  # Add this line
         except FileNotFoundError:
             pass
