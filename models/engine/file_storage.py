@@ -61,7 +61,7 @@ class FileStorage:
                     module = importlib.import_module(f'models.{class_name.lower()}')
                     class_type = getattr(module, class_name)
                     print(f"here is the class type {class_type}")
-                    if class_type:
+                    """if class_type:
                         obj_data['created_at'] = datetime.strptime(
                             obj_data['created_at'], '%Y-%m-%dT%H:%M:%S.%f'
                         )
@@ -70,6 +70,6 @@ class FileStorage:
                         )
                         obj = class_type(**obj_data)
                         # Directly update __objects dictionary
-                        self.__objects[key] = obj
+                        self.__objects[key] = obj"""
         except FileNotFoundError:
             pass
