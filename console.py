@@ -32,7 +32,9 @@ class HBNBCommand(cmd.Cmd):
         """
         Quit command to exit the program
         """
-        if arg.strip() == "quit":
+        message = arg.strip()
+        print(message)
+        if message == "quit":
             return True
         print("** Unknown command: {}".format(arg))
         return False
