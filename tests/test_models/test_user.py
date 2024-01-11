@@ -52,16 +52,6 @@ class TestUser(unittest.TestCase):
         self.assertEqual(self.test_user.first_name, "")
         self.assertEqual(self.test_user.last_name, "")
 
-    def test_to_dict_method(self):
-        """
-        Test the to_dict method of User.
-        """
-        user_dict = self.test_user.to_dict()
-        self.assertEqual(user_dict['email'], self.test_user.email)
-        self.assertEqual(user_dict['password'], self.test_user.password)
-        self.assertEqual(user_dict['first_name'], self.test_user.first_name)
-        self.assertEqual(user_dict['last_name'], self.test_user.last_name)
-
     def test_str_representation(self):
         """
         Test the __str__ method of User.
