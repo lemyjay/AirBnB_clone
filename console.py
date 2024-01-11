@@ -134,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
                 if class_name == obj.__class__.__name__:
                     obj_list.append(str(obj))
             if not obj_list:
-                print("** class doesn't exit **")
+                print("** class doesn't exist **")
                 return
             print(obj_list)
         except Exception as e:
