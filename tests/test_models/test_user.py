@@ -88,7 +88,7 @@ class TestUser(unittest.TestCase):
 
         self.assertIsNotNone(reloaded_user)
         self.assertEqual(self.test_user.id, reloaded_user.id)
-        self.assertEqual(self.test_user, reloaded_user.email)
+        self.assertEqual(self.test_user.email, reloaded_user.email)
         self.assertEqual(self.test_user.password , reloaded_user.password)
         self.assertEqual(self.test_user.first_name, reloaded_user.first_name)
         self.assertEqual(self.test_user.last_name, reloaded_user.last_name)
