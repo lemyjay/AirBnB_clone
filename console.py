@@ -34,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if arg.strip() == "":
             return True
-        print("** Unknown command: {}".format(arg))
+        print("** Invalid command for quit. Type 'quit' to exit.")
         return False
 
     def do_EOF(self, _):
