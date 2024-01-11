@@ -59,6 +59,10 @@ class FileStorage:
                 for key, obj_data in data.items():
                     class_name, _ = key.split('.')
                     module = importlib.import_module('models.base_model')
+
+                    if class_name == "User":
+                        module = importlib.import_module("models.user")
+
                     class_type = getattr(module, class_name)
                     if class_type:
                         obj_data['created_at'] = datetime.strptime(

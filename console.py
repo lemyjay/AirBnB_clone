@@ -4,6 +4,7 @@ Command interpreter module
 """
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 from shlex import split
 
@@ -19,11 +20,16 @@ class HBNBCommand(cmd.Cmd):
     - do_quit(arg): Implements the 'quit' command to exit the program.
     - do_EOF(arg): Implements the 'EOF' command to exit the program.
     - emptyline(): Does nothing on an empty line.
-    - do_create(arg): Creates a new instance of BaseModel.
-    - do_show(arg): Prints the string representation of an instance.
-    - do_destroy(arg): Deletes an instance.
-    - do_all(arg): Prints all string representation of all instances.
-    - do_update(arg): Updates an instance based on the class name and id.
+    - do_create(arg): Creates a new instance of BaseModel or User, saves
+      it (to the JSON file) and prints the id.
+    - do_show(arg): Prints the string representation of an instance based
+      on the class name and id.
+    - do_destroy(arg): Deletes an instance based on the class name and id
+      (saves the change into the JSON file)
+    - do_all(arg): Prints all string representation of all instances based or
+      not on the class name.
+    - do_update(arg): Updates an instance based on the class name and id by adding
+      or updating attribute (save the change into the JSON file).
     """
 
     prompt = "(hbnb) "
@@ -60,7 +66,11 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            new_instance = eval(args[0])()
+            class_name = args[0]
+            if class_name == "User":
+                new_instance = User()
+            else:
+                new_instance = eval(class_name)()
             new_instance.save()
             print(new_instance.id)
         except Exception as e:
@@ -86,8 +96,17 @@ class HBNBCommand(cmd.Cmd):
             key = "{}.{}".format(class_name, instance_id)
             obj = storage.all().get(key)
             if not obj:
-                print("** no instance found **")
+                # If the class is User, try to find the object with the User class
+                if class_name == "User":
+                    user_objects = [obj for obj in storage.all().values() if isinstance(obj, User)]
+                    if user_objects:
+                        print(user_objects[0])
+                    else:
+                        print("** no instance found **")
+                else:
+                    print("** no instance found **")
                 return
+
             print(obj)
         except Exception as e:
             print("** {}". format(e))
