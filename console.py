@@ -3,6 +3,7 @@
 Command interpreter module
 """
 import cmd
+import sys
 from models.base_model import BaseModel
 from models.user import User
 from models.place import Place
@@ -44,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
         Quit command to exit the program
         """
         if arg.strip() == "":
-            return True
+            sys.exit()
         print("** Invalid command for quit. Type 'quit' to exit.")
         return False
 
@@ -166,7 +167,7 @@ class HBNBCommand(cmd.Cmd):
         """
         args = split(arg)
         obj_list = []
-        if not args or arg[0] == "":
+        if not args or args[0] == "":
             for obj in storage.all().values():
                 obj_list.append(str(obj))
             print(obj_list)
@@ -218,6 +219,55 @@ class HBNBCommand(cmd.Cmd):
         except Exception as e:
             print("** {}".format(e))
 
+    def do_help(self, arg):
+        """
+        Display help information for the available commands.
+
+        Usage:
+            help
+            help <command>
+
+        If no command is specified, it displays the list of documented commands.
+        If a specific command is provided, it shows detailed help information for that command.
+
+        Examples:
+            help
+            help quit
+
+        Available Commands:
+            EOF    - Exit the program
+            help   - Display help information
+            quit   - Quit the program
+            create - Create a new instance and save it to the JSON file
+            show   - Display the string representation of an instance
+            destroy - Delete an instance based on the class name and id
+            all    - Display string representations of all instances
+            update - Update an instance based on the class name and id
+
+        Additional help information can be added for each specific command.
+        """
+        if not arg:
+            print("Documented commands (type help <topic>):")
+            print("========================================")
+            for cmd_name in dir(self):
+                if cmd_name.startswith("do_"):
+                    command = cmd_name[3:]
+                    print(f"{command.ljust(10)} - {getattr(self, cmd_name).__doc__}")
+        else:
+            cmd_method = getattr(self, f"do_{arg}", None)
+            if cmd_method:
+                print(f"Help for {arg}:")
+                print(cmd_method.__doc__)
+            else:
+                print(f"** No help available for {arg} **")
+
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    if sys.stdin.isatty():
+        # Interactive mode
+        HBNBCommand().cmdloop()
+    else:
+        # Non-interactive mode
+        input_commands = sys.stdin.read().splitlines()
+        for command in input_commands:
+            HBNBCommand().onecmd(command)
