@@ -58,10 +58,7 @@ class FileStorage:
                 data = json.load(file)
                 for key, obj_data in data.items():
                     class_name, _ = key.split('.')
-                    module = importlib.import_module('models.base_model')
-
-                    if class_name == "User":
-                        module = importlib.import_module("models.user")
+                    module = importlib.import_module(f"models.{class_name.lower()}" if class_name != "BaseModel" else 'models.base_model')
 
                     class_type = getattr(module, class_name)
                     if class_type:

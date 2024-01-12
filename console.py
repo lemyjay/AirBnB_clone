@@ -5,6 +5,11 @@ Command interpreter module
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from models import storage
 from shlex import split
 
@@ -58,23 +63,31 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """
-        Creates a new instance of BaseModel, saves
-        it (to the JSON file) and prints the id.
+        Creates a new instance of BaseModel, User, Place, State, City, Amenity, or Review,
+        saves it (to the JSON file) and prints the id.
         """
         args = split(arg)
         if not args or args[0] == "":
             print("** class name missing **")
             return
+        class_mapping = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "Place": Place,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Review": Review,
+        }
         try:
             class_name = args[0]
-            if class_name == "User":
-                new_instance = User()
-            else:
-                new_instance = eval(class_name)()
+            new_instance = class_mapping[class_name]()
             new_instance.save()
             print(new_instance.id)
-        except Exception as e:
+        except KeyError:
             print("** class doesn't exist **")
+        except Exception as e:
+            print("** {}".format(e))
 
     def do_show(self, arg):
         """
@@ -95,21 +108,29 @@ class HBNBCommand(cmd.Cmd):
             instance_id = args[1]
             key = "{}.{}".format(class_name, instance_id)
             obj = storage.all().get(key)
-            if not obj:
-                # If the class is User, try to find the object with the User class
-                if class_name == "User":
-                    user_objects = [obj for obj in storage.all().values() if isinstance(obj, User)]
-                    if user_objects:
-                        print(user_objects[0])
-                    else:
-                        print("** no instance found **")
+
+            class_mapping = {
+                "BaseModel": BaseModel,
+                "User": User,
+                "Place": Place,
+                "State": State,
+                "City": City,
+                "Amenity": Amenity,
+                "Review": Review,
+            }
+
+            if class_name in class_mapping:
+                class_type = class_mapping[class_name]
+                instance_objects = [obj for obj in storage.all().values() if isinstance(obj, class_type)]
+                if instance_objects:
+                    print(instance_objects[0])
                 else:
                     print("** no instance found **")
-                return
+            else:
+                print("** class doesn't exist **")
 
-            print(obj)
         except Exception as e:
-            print("** {}". format(e))
+            print("** {}".format(e))
 
     def do_destroy(self, arg):
         """
