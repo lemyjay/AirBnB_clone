@@ -252,7 +252,7 @@ class HBNBCommand(cmd.Cmd):
                 if cmd_name.startswith("do_"):
                     command = cmd_name[3:]
                     docstring = getattr(self, cmd_name).__doc__.strip()
-                    print(f"{command.ljust(10)}: {docstring}\n")
+                    print(f"{command}: {docstring}\n")
         else:
             cmd_method = getattr(self, f"do_{arg}", None)
             if cmd_method:
