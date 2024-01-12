@@ -18,8 +18,10 @@ class TestState(unittest.TestCase):
         test_instance_creation(self): Test creating an instance of State.
         test_attributes(self): Test State instance attributes.
         test_str_representation(self): Test the __str__ method of State.
-        test_save_and_reload(self): Test saving and reloading State instances from file.
-        test_invalid_attribute(self): Test setting an invalid attribute for State.
+        test_save_and_reload(self): Test saving and reloading State
+                                    instances from file.
+        test_invalid_attribute(self): Test setting an invalid attribute
+                                      for State.
     """
     def setUp(self):
         """
@@ -53,7 +55,10 @@ class TestState(unittest.TestCase):
         """
         Test the __str__ method of State.
         """
-        expected_str = f"[State] ({self.test_state.id}) {self.test_state.__dict__}"
+        expected_str = (
+                f"[State] ({self.test_state.id}) "
+                f"{self.test_state.__dict__}"
+                )
         self.assertEqual(str(self.test_state), expected_str)
 
     def test_save_and_reload(self):

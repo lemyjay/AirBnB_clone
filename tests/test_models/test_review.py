@@ -18,8 +18,10 @@ class TestReview(unittest.TestCase):
         test_instance_creation(self): Test creating an instance of Review.
         test_attributes(self): Test Review instance attributes.
         test_str_representation(self): Test the __str__ method of Review.
-        test_save_and_reload(self): Test saving and reloading Review instances from file.
-        test_invalid_attribute(self): Test setting an invalid attribute for Review.
+        test_save_and_reload(self): Test saving and reloading Review
+                                    instances from file.
+        test_invalid_attribute(self): Test setting an invalid attribute
+                                      for Review.
     """
     def setUp(self):
         """
@@ -55,7 +57,10 @@ class TestReview(unittest.TestCase):
         """
         Test the __str__ method of Review.
         """
-        expected_str = f"[Review] ({self.test_review.id}) {self.test_review.__dict__}"
+        expected_str = (
+                f"[Review] ({self.test_review.id}) "
+                f"{self.test_review.__dict__}"
+                )
         self.assertEqual(str(self.test_review), expected_str)
 
     def test_save_and_reload(self):

@@ -18,8 +18,10 @@ class TestPlace(unittest.TestCase):
         test_instance_creation(self): Test creating an instance of Place.
         test_attributes(self): Test Place instance attributes.
         test_str_representation(self): Test the __str__ method of Place.
-        test_save_and_reload(self): Test saving and reloading Place instances from file.
-        test_invalid_attribute(self): Test setting an invalid attribute for Place.
+        test_save_and_reload(self): Test saving and reloading
+                                    Place instances from file.
+        test_invalid_attribute(self): Test setting an invalid attribute
+                                      for Place.
     """
     def setUp(self):
         """
@@ -63,7 +65,10 @@ class TestPlace(unittest.TestCase):
         """
         Test the __str__ method of Place.
         """
-        expected_str = f"[Place] ({self.test_place.id}) {self.test_place.__dict__}"
+        expected_str = (
+                f"[Place] ({self.test_place.id}) "
+                f"{self.test_place.__dict__}"
+                )
         self.assertEqual(str(self.test_place), expected_str)
 
     def test_save_and_reload(self):
@@ -97,14 +102,29 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(self.test_place.city_id, reloaded_place.city_id)
         self.assertEqual(self.test_place.user_id, reloaded_place.user_id)
         self.assertEqual(self.test_place.name, reloaded_place.name)
-        self.assertEqual(self.test_place.description, reloaded_place.description)
-        self.assertEqual(self.test_place.number_rooms, reloaded_place.number_rooms)
-        self.assertEqual(self.test_place.number_bathrooms, reloaded_place.number_bathrooms)
+        self.assertEqual(
+                self.test_place.description,
+                reloaded_place.description
+                )
+        self.assertEqual(
+                self.test_place.number_rooms,
+                reloaded_place.number_rooms
+                )
+        self.assertEqual(
+                self.test_place.number_bathrooms,
+                reloaded_place.number_bathrooms
+                )
         self.assertEqual(self.test_place.max_guest, reloaded_place.max_guest)
-        self.assertEqual(self.test_place.price_by_night, reloaded_place.price_by_night)
+        self.assertEqual(
+                self.test_place.price_by_night,
+                reloaded_place.price_by_night
+                )
         self.assertEqual(self.test_place.latitude, reloaded_place.latitude)
         self.assertEqual(self.test_place.longitude, reloaded_place.longitude)
-        self.assertEqual(self.test_place.amenity_ids, reloaded_place.amenity_ids)
+        self.assertEqual(
+                self.test_place.amenity_ids,
+                reloaded_place.amenity_ids
+                )
 
 
 if __name__ == "__main__":

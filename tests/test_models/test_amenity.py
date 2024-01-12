@@ -18,8 +18,10 @@ class TestAmenity(unittest.TestCase):
         test_instance_creation(self): Test creating an instance of Amenity.
         test_attributes(self): Test Amenity instance attributes.
         test_str_representation(self): Test the __str__ method of Amenity.
-        test_save_and_reload(self): Test saving and reloading Amenity instances from file.
-        test_invalid_attribute(self): Test setting an invalid attribute for Amenity.
+        test_save_and_reload(self): Test saving and reloading Amenity instances
+                                    from file.
+        test_invalid_attribute(self): Test setting an invalid attribute for
+                                      Amenity.
     """
     def setUp(self):
         """
@@ -53,7 +55,10 @@ class TestAmenity(unittest.TestCase):
         """
         Test the __str__ method of Amenity.
         """
-        expected_str = f"[Amenity] ({self.test_amenity.id}) {self.test_amenity.__dict__}"
+        expected_str = (
+                f"[Amenity] ({self.test_amenity.id}) "
+                f"{self.test_amenity.__dict__}"
+                )
         self.assertEqual(str(self.test_amenity), expected_str)
 
     def test_save_and_reload(self):

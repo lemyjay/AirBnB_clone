@@ -18,8 +18,10 @@ class TestUser(unittest.TestCase):
         test_instance_creation(self): Test creating an instance of User.
         test_attributes(self): Test User instance attributes.
         test_str_representation(self): Test the __str__ method of User.
-        test_save_and_reload(self): Test saving and reloading User instances from file.
-        test_invalid_attribute(self): Test setting an invalid attribute for User.
+        test_save_and_reload(self): Test saving and reloading User
+                                    instances from file.
+        test_invalid_attribute(self): Test setting an invalid attribute
+                                      for User.
     """
     def setUp(self):
         """
@@ -56,7 +58,10 @@ class TestUser(unittest.TestCase):
         """
         Test the __str__ method of User.
         """
-        expected_str = f"[User] ({self.test_user.id}) {self.test_user.__dict__}"
+        expected_str = (
+                f"[User] ({self.test_user.id}) "
+                f"{self.test_user.__dict__}"
+                )
         self.assertEqual(str(self.test_user), expected_str)
 
     def test_save_and_reload(self):
@@ -79,7 +84,7 @@ class TestUser(unittest.TestCase):
         self.assertIsNotNone(reloaded_user)
         self.assertEqual(self.test_user.id, reloaded_user.id)
         self.assertEqual(self.test_user.email, reloaded_user.email)
-        self.assertEqual(self.test_user.password , reloaded_user.password)
+        self.assertEqual(self.test_user.password, reloaded_user.password)
         self.assertEqual(self.test_user.first_name, reloaded_user.first_name)
         self.assertEqual(self.test_user.last_name, reloaded_user.last_name)
 

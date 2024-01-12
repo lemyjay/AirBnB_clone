@@ -19,9 +19,12 @@ class TestCity(unittest.TestCase):
         test_instance_creation(self): Test creating an instance of City.
         test_attributes(self): Test City instance attributes.
         test_str_representation(self): Test the __str__ method of City.
-        test_save_and_reload(self): Test saving and reloading City instances from file.
-        test_invalid_attribute(self): Test setting an invalid attribute for City.
-        test_relationship_with_state(self): Test the relationship between City and State.
+        test_save_and_reload(self): Test saving and reloading City instances
+                                    from file.
+        test_invalid_attribute(self): Test setting an invalid attribute
+                                      for City.
+        test_relationship_with_state(self): Test the relationship between
+                                            City and State.
     """
     def setUp(self):
         """
@@ -56,7 +59,10 @@ class TestCity(unittest.TestCase):
         """
         Test the __str__ method of City.
         """
-        expected_str = f"[City] ({self.test_city.id}) {self.test_city.__dict__}"
+        expected_str = (
+                f"[City] ({self.test_city.id}) "
+                f"{self.test_city.__dict__}"
+                )
         self.assertEqual(str(self.test_city), expected_str)
 
     def test_save_and_reload(self):
