@@ -246,12 +246,13 @@ class HBNBCommand(cmd.Cmd):
 
         """
         if not arg:
-            print("Documented commands (type help <topic>):")
+            print("\nDocumented commands (type help <topic>):")
             print("========================================")
             for cmd_name in dir(self):
                 if cmd_name.startswith("do_"):
                     command = cmd_name[3:]
-                    print(f"{command}: {getattr(self, cmd_name).__doc__}")
+                    docstring = getattr(self, cmd_name).__doc__.strip()
+                    print(f"{command}: {docstring}")
                     print()
         else:
             cmd_method = getattr(self, f"do_{arg}", None)
