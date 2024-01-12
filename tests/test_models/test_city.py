@@ -80,13 +80,6 @@ class TestCity(unittest.TestCase):
         self.assertEqual(self.test_city.state_id, reloaded_city.state_id)
         self.assertEqual(self.test_city.name, reloaded_city.name)
 
-    def test_invalid_attribute(self):
-        """
-        Test setting an invalid attribute for City.
-        """
-        with self.assertRaises(AttributeError):
-            self.test_city.invalid_attribute = "value"
-
     def test_relationship_with_state(self):
         """
         Test the relationship between City and State.

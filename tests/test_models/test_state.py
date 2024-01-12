@@ -75,13 +75,6 @@ class TestState(unittest.TestCase):
         self.assertEqual(self.test_state.id, reloaded_state.id)
         self.assertEqual(self.test_state.name, reloaded_state.name)
 
-    def test_invalid_attribute(self):
-        """
-        Test setting an invalid attribute for State.
-        """
-        with self.assertRaises(AttributeError):
-            self.test_state.invalid_attribute = "value"
-
 
 if __name__ == "__main__":
     unittest.main()

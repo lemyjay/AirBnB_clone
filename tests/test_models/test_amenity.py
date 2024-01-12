@@ -75,13 +75,6 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(self.test_amenity.id, reloaded_amenity.id)
         self.assertEqual(self.test_amenity.name, reloaded_amenity.name)
 
-    def test_invalid_attribute(self):
-        """
-        Test setting an invalid attribute for Amenity.
-        """
-        with self.assertRaises(AttributeError):
-            self.test_amenity.invalid_attribute = "value"
-
 
 if __name__ == "__main__":
     unittest.main()

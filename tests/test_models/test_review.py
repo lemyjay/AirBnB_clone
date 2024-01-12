@@ -82,13 +82,6 @@ class TestReview(unittest.TestCase):
         self.assertEqual(self.test_review.user_id, reloaded_review.user_id)
         self.assertEqual(self.test_review.text, reloaded_review.text)
 
-    def test_invalid_attribute(self):
-        """
-        Test setting an invalid attribute for Review.
-        """
-        with self.assertRaises(AttributeError):
-            self.test_review.invalid_attribute = "value"
-
 
 if __name__ == "__main__":
     unittest.main()

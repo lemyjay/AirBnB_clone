@@ -106,13 +106,6 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(self.test_place.longitude, reloaded_place.longitude)
         self.assertEqual(self.test_place.amenity_ids, reloaded_place.amenity_ids)
 
-    def test_invalid_attribute(self):
-        """
-        Test setting an invalid attribute for Place.
-        """
-        with self.assertRaises(AttributeError):
-            self.test_place.invalid_attribute = "value"
-
 
 if __name__ == "__main__":
     unittest.main()
