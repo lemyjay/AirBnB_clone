@@ -34,8 +34,8 @@ class HBNBCommand(cmd.Cmd):
       (saves the change into the JSON file)
     - do_all(arg): Prints all string representation of all instances based or
       not on the class name.
-    - do_update(arg): Updates an instance based on the class name and id by adding
-      or updating attribute (save the change into the JSON file).
+    - do_update(arg): Updates an instance based on the class name and id by
+      adding or updating attribute (save the change into the JSON file).
     """
 
     prompt = "(hbnb) "
@@ -64,8 +64,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """
-        Creates a new instance of BaseModel, User, Place, State, City, Amenity, or Review,
-        saves it (to the JSON file) and prints the id.
+        Creates a new instance of BaseModel, User, Place, State, City,
+        Amenity, or Review, saves it (to the JSON file) and prints the id.
         """
         args = split(arg)
         if not args or args[0] == "":
@@ -122,7 +122,10 @@ class HBNBCommand(cmd.Cmd):
 
             if class_name in class_mapping:
                 class_type = class_mapping[class_name]
-                instance_objects = [obj for obj in storage.all().values() if isinstance(obj, class_type)]
+                instance_objects = [
+                    obj for obj in storage.all().values()
+                    if isinstance(obj, class_type)
+                    ]
                 if instance_objects:
                     print(instance_objects[0])
                 else:
@@ -227,8 +230,10 @@ class HBNBCommand(cmd.Cmd):
             help
             help <command>
 
-        If no command is specified, it displays the list of documented commands.
-        If a specific command is provided, it shows detailed help information for that command.
+        If no command is specified, it displays the list of
+        documented commands.
+        If a specific command is provided, it shows detailed
+        help information for that command.
 
         Examples:
             help
