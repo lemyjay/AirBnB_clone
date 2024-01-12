@@ -244,7 +244,6 @@ class HBNBCommand(cmd.Cmd):
             all    - Display string representations of all instances
             update - Update an instance based on the class name and id
 
-        Additional help information can be added for each specific command.
         """
         if not arg:
             print("Documented commands (type help <topic>):")
