@@ -292,7 +292,7 @@ class HBNBCommand(cmd.Cmd):
             if command == "all":
                 HBNBCommand.do_all(self, class_arg)
             elif command == "count":
-                HBNBCommand.do_count(self, arg)
+                HBNBCommand.do_count(self, class_arg)
             else:
                 print("*** Unknown syntax: {}".format(line))
         except IndexError:
