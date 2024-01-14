@@ -268,7 +268,7 @@ class HBNBCommand(cmd.Cmd):
             args = args[1].split('(')
             command = args[0]
             if command == "all" and args[1].rstrip(')') == "":
-                HBNBCommand.do_all(self, class_arg)
+                self.do_all(class_arg)
             else:
                 print("*** Unknown syntax: {}".format(line))
         except IndexError:
