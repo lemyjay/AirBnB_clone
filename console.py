@@ -254,6 +254,26 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print(f"** No help available for {arg} **")
 
+    def do_default(self, arg):
+        """
+        Handles calss name followed by an argument.
+        eg: <class_name>.all()
+        """
+        args = arg.split('.')
+        class_arg = args[0]
+        if len(args) == 1:
+            print("*** Unknown syntax: {}".format(arg))
+            return
+        try:
+            args = args[1].split('(')
+            command = args[0]
+            if command == "all":
+                HBNBCommand.do_all(self, class_arg)
+            else:
+                print("*** Unknown syntax: {}".format(arg))
+        except IndexError:
+            print("*** Unknown syntax: {}".format(arg))
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
