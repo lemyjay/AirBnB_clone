@@ -301,6 +301,13 @@ class HBNBCommand(cmd.Cmd):
                 id_arg = id_arg.strip('"')
                 arg = class_arg + ' ' + id_arg
                 HBNBCommand.do_show(self, arg)
+            elif command == "destroy":
+                args = args[1].split(')')
+                id_arg = args[0]
+                id_arg = id_arg.strip('"')
+                id_arg = id_arg.strip("'")
+                arg = class_arg + ' ' + id_arg
+                HBNBCommand.do_destroy(self, arg)
             else:
                 print("*** Unknown syntax: {}".format(line))
         except IndexError:
