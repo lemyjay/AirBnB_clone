@@ -45,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
         Quit command to exit the program
         """
         if arg.strip() == "":
-            sys.exit()
+            return True
         print("** Invalid command for quit. Type 'quit' to exit.")
         return False
 
