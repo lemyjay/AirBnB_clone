@@ -82,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
 
         try:
             class_name = args[0]
-            new_instance = class_mapping[class_name]()
+            new_instance = HBNBCommand.class_mapping[class_name]()
             new_instance.save()
             print(new_instance.id)
         except KeyError:
@@ -108,8 +108,8 @@ class HBNBCommand(cmd.Cmd):
 
             instance_id = args[1]
 
-            if class_name in class_mapping:
-                class_type = class_mapping[class_name]
+            if class_name in HBNBCommand.class_mapping:
+                class_type = HBNBCommand.class_mapping[class_name]
                 instance_objects = [
                     obj for obj in storage.all().values()
                     if isinstance(obj, class_type) and obj.id == instance_id
