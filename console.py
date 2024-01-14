@@ -267,7 +267,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             args = args[1].split('(')
             command = args[0]
-            if command == "all":
+            if command == "all" and args[1].rstrip(')') == "":
                 HBNBCommand.do_all(self, class_arg)
             else:
                 print("*** Unknown syntax: {}".format(line))
