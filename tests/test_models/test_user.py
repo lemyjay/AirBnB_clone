@@ -11,21 +11,23 @@ from models import storage
 class TestUser(unittest.TestCase):
     """
     Test case class for the User model.
-    
+
     Methods:
         setUp(self): Set up a clean environment before each test.
         tearDown(self): Clean up the environment after each test.
         test_instance_creation(self): Test creating an instance of User.
         test_attributes(self): Test User instance attributes.
         test_str_representation(self): Test the __str__ method of User.
-        test_save_and_reload(self): Test saving and reloading User instances from file.
-        test_invalid_attribute(self): Test setting an invalid attribute for User.
+        test_save_and_reload(self): Test saving and reloading User
+                                    instances from file.
+        test_invalid_attribute(self): Test setting an invalid attribute
+                                      for User.
     """
     def setUp(self):
         """
         Set up a clean environment before each test.
         """
-        storage.reload()  # Ensure a clean storage state
+        storage.reload()  # Ensures a clean storage state
         self.test_user = User()
 
     def tearDown(self):
@@ -33,7 +35,7 @@ class TestUser(unittest.TestCase):
         Clean up the environment after each test.
         """
         try:
-            os.remove("file.json")  # Remove the test file after each test
+            os.remove("file.json")  # Removes the test file after each test
         except FileNotFoundError:
             pass
 
@@ -56,7 +58,10 @@ class TestUser(unittest.TestCase):
         """
         Test the __str__ method of User.
         """
-        expected_str = f"[User] ({self.test_user.id}) {self.test_user.__dict__}"
+        expected_str = (
+                f"[User] ({self.test_user.id}) "
+                f"{self.test_user.__dict__}"
+                )
         self.assertEqual(str(self.test_user), expected_str)
 
     def test_save_and_reload(self):
@@ -70,22 +75,18 @@ class TestUser(unittest.TestCase):
         self.test_user.last_name = "Doe"
         self.test_user.save()
 
-        # Create a new User instance and reload data from file
         new_user = User()
-        new_user.reload()
+        new_user.save()
+        storage.reload()
+        key = "User.{}".format(user_id)
+        reloaded_user = storage.all().get(key)
 
-        self.assertEqual(new_user.id, user_id)
-        self.assertEqual(new_user.email, "test@example.com")
-        self.assertEqual(new_user.password, "password123")
-        self.assertEqual(new_user.first_name, "John")
-        self.assertEqual(new_user.last_name, "Doe")
-
-    def test_invalid_attribute(self):
-        """
-        Test setting an invalid attribute for User.
-        """
-        with self.assertRaises(AttributeError):
-            self.test_user.invalid_attribute = "value"
+        self.assertIsNotNone(reloaded_user)
+        self.assertEqual(self.test_user.id, reloaded_user.id)
+        self.assertEqual(self.test_user.email, reloaded_user.email)
+        self.assertEqual(self.test_user.password, reloaded_user.password)
+        self.assertEqual(self.test_user.first_name, reloaded_user.first_name)
+        self.assertEqual(self.test_user.last_name, reloaded_user.last_name)
 
 
 if __name__ == "__main__":

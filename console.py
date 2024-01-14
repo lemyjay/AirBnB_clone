@@ -3,10 +3,16 @@
 Command interpreter module
 """
 import cmd
+import sys
+from shlex import split
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from models import storage
-from shlex import split
 
 
 class HBNBCommand(cmd.Cmd):
@@ -28,8 +34,8 @@ class HBNBCommand(cmd.Cmd):
       (saves the change into the JSON file)
     - do_all(arg): Prints all string representation of all instances based or
       not on the class name.
-    - do_update(arg): Updates an instance based on the class name and id by adding
-      or updating attribute (save the change into the JSON file).
+    - do_update(arg): Updates an instance based on the class name and id by
+      adding or updating attribute (save the change into the JSON file).
     """
 
     prompt = "(hbnb) "
@@ -39,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
         Quit command to exit the program
         """
         if arg.strip() == "":
-            return True
+            sys.exit()
         print("** Invalid command for quit. Type 'quit' to exit.")
         return False
 
@@ -58,23 +64,31 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """
-        Creates a new instance of BaseModel, saves
-        it (to the JSON file) and prints the id.
+        Creates a new instance of BaseModel, User, Place, State, City,
+        Amenity, or Review, saves it (to the JSON file) and prints the id.
         """
         args = split(arg)
         if not args or args[0] == "":
             print("** class name missing **")
             return
+        class_mapping = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "Place": Place,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Review": Review,
+        }
         try:
             class_name = args[0]
-            if class_name == "User":
-                new_instance = User()
-            else:
-                new_instance = eval(class_name)()
+            new_instance = class_mapping[class_name]()
             new_instance.save()
             print(new_instance.id)
-        except Exception as e:
+        except KeyError:
             print("** class doesn't exist **")
+        except Exception as e:
+            print("** {}".format(e))
 
     def do_show(self, arg):
         """
@@ -95,21 +109,32 @@ class HBNBCommand(cmd.Cmd):
             instance_id = args[1]
             key = "{}.{}".format(class_name, instance_id)
             obj = storage.all().get(key)
-            if not obj:
-                # If the class is User, try to find the object with the User class
-                if class_name == "User":
-                    user_objects = [obj for obj in storage.all().values() if isinstance(obj, User)]
-                    if user_objects:
-                        print(user_objects[0])
-                    else:
-                        print("** no instance found **")
+
+            class_mapping = {
+                "BaseModel": BaseModel,
+                "User": User,
+                "Place": Place,
+                "State": State,
+                "City": City,
+                "Amenity": Amenity,
+                "Review": Review,
+            }
+
+            if class_name in class_mapping:
+                class_type = class_mapping[class_name]
+                instance_objects = [
+                    obj for obj in storage.all().values()
+                    if isinstance(obj, class_type)
+                    ]
+                if instance_objects:
+                    print(instance_objects[0])
                 else:
                     print("** no instance found **")
-                return
+            else:
+                print("** class doesn't exist **")
 
-            print(obj)
         except Exception as e:
-            print("** {}". format(e))
+            print("** {}".format(e))
 
     def do_destroy(self, arg):
         """
@@ -145,7 +170,7 @@ class HBNBCommand(cmd.Cmd):
         """
         args = split(arg)
         obj_list = []
-        if not args or arg[0] == "":
+        if not args or args[0] == "":
             for obj in storage.all().values():
                 obj_list.append(str(obj))
             print(obj_list)
@@ -197,6 +222,57 @@ class HBNBCommand(cmd.Cmd):
         except Exception as e:
             print("** {}".format(e))
 
+    def do_help(self, arg):
+        """
+        Display help information for the available commands.
+
+        Usage:
+            help
+            help <command>
+
+        If no command is specified, it displays the list of
+        documented commands.
+        If a specific command is provided, it shows detailed
+        help information for that command.
+
+        Examples:
+            help
+            help quit
+
+        Available Commands:
+            EOF    - Exit the program
+            help   - Display help information
+            quit   - Quit the program
+            create - Create a new instance and save it to the JSON file
+            show   - Display the string representation of an instance
+            destroy - Delete an instance based on the class name and id
+            all    - Display string representations of all instances
+            update - Update an instance based on the class name and id
+
+        """
+        if not arg:
+            print("\nDocumented commands (type help <topic>):")
+            print("========================================\n")
+            for cmd_name in dir(self):
+                if cmd_name.startswith("do_"):
+                    command = cmd_name[3:]
+                    docstring = getattr(self, cmd_name).__doc__.strip()
+                    print(f"{command}: {docstring}\n")
+        else:
+            cmd_method = getattr(self, f"do_{arg}", None)
+            if cmd_method:
+                print(f"Help for {arg}:")
+                print(cmd_method.__doc__)
+            else:
+                print(f"** No help available for {arg} **")
+
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    if sys.stdin.isatty():
+        # Interactive mode
+        HBNBCommand().cmdloop()
+    else:
+        # Non-interactive mode
+        input_commands = sys.stdin.read().splitlines()
+        for command in input_commands:
+            HBNBCommand().onecmd(command)
