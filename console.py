@@ -294,6 +294,13 @@ class HBNBCommand(cmd.Cmd):
                 HBNBCommand.do_all(self, class_arg)
             elif command == "count":
                 HBNBCommand.do_count(self, class_arg)
+            elif command == "show":
+                args = args[1].split(')')
+                id_arg = args[0]
+                id_arg = id_arg.strip("'")
+                id_arg = id_arg.strip('"')
+                arg = class_arg + ' ' + id_arg
+                HBNBCommand.do_show(self, arg)
             else:
                 print("*** Unknown syntax: {}".format(line))
         except IndexError:
