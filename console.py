@@ -3,7 +3,6 @@
 Command interpreter module
 """
 import cmd
-import sys
 from shlex import split
 from models.base_model import BaseModel
 from models.user import User
@@ -39,6 +38,15 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = "(hbnb) "
+    class_mapping = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "Place": Place,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Review": Review,
+        }
 
     def do_quit(self, arg):
         """
@@ -71,15 +79,7 @@ class HBNBCommand(cmd.Cmd):
         if not args or args[0] == "":
             print("** class name missing **")
             return
-        class_mapping = {
-            "BaseModel": BaseModel,
-            "User": User,
-            "Place": Place,
-            "State": State,
-            "City": City,
-            "Amenity": Amenity,
-            "Review": Review,
-        }
+
         try:
             class_name = args[0]
             new_instance = class_mapping[class_name]()
@@ -107,16 +107,6 @@ class HBNBCommand(cmd.Cmd):
                 return
 
             instance_id = args[1]
-
-            class_mapping = {
-                "BaseModel": BaseModel,
-                "User": User,
-                "Place": Place,
-                "State": State,
-                "City": City,
-                "Amenity": Amenity,
-                "Review": Review,
-            }
 
             if class_name in class_mapping:
                 class_type = class_mapping[class_name]
@@ -266,11 +256,4 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == '__main__':
-    if sys.stdin.isatty():
-        # Interactive mode
-        HBNBCommand().cmdloop()
-    else:
-        # Non-interactive mode
-        input_commands = sys.stdin.read().splitlines()
-        for command in input_commands:
-            HBNBCommand().onecmd(command)
+    HBNBCommand().cmdloop()
