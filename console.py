@@ -261,12 +261,15 @@ class HBNBCommand(cmd.Cmd):
         """
         args = line.split('.')
         class_arg = args[0]
+        print(class_arg)
         if len(args) == 1:
             print("*** Unknown syntax: {}".format(line))
             return
         try:
             args = args[1].rstrip(')').split('(')
+            print(args)
             command = args[0]
+            print(command)
             if command == "all" and args[1] == "":
                 self.do_all(class_arg)
             else:
