@@ -107,7 +107,6 @@ class HBNBCommand(cmd.Cmd):
                 return
 
             instance_id = args[1]
-            key = "{}.{}".format(class_name, instance_id)
 
             class_mapping = {
                 "BaseModel": BaseModel,
