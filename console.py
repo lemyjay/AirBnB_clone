@@ -210,6 +210,28 @@ class HBNBCommand(cmd.Cmd):
         except Exception as e:
             print("** {}".format(e))
 
+    def do_count(self, arg):
+        """
+        Retrieves the number of instances of a class.
+
+        Usage:
+            count <class name>
+        """
+        args = split(arg)
+        if not args or args[0] == "":
+            print("** class name missing **")
+            return
+        try:
+            class_name = args[0]
+            class_type = HBNBCommand.class_mapping.get(class_name)
+            if not class_type:
+                print("** class doesn't exist **")
+                return
+            count = sum(1 for obj in storage.all().values() if isinstance(obj, class_type))
+            print(count)
+        except Exception as e:
+            print("** {}".format(e))
+
     def do_help(self, arg):
         """
         Display help information for the available commands.
@@ -269,6 +291,8 @@ class HBNBCommand(cmd.Cmd):
             command = args[0]
             if command == "all":
                 HBNBCommand.do_all(self, class_arg)
+            elif command == "count":
+                HBNBCommand.do_count(self, arg)
             else:
                 print("*** Unknown syntax: {}".format(line))
         except IndexError:
