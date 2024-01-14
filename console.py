@@ -227,7 +227,8 @@ class HBNBCommand(cmd.Cmd):
             if not class_type:
                 print("** class doesn't exist **")
                 return
-            count = sum(1 for obj in storage.all().values() if isinstance(obj, class_type))
+            count = sum(1 for obj in storage.all().values()
+                        if isinstance(obj, class_type))
             print(count)
         except Exception as e:
             print("** {}".format(e))
