@@ -107,8 +107,6 @@ class HBNBCommand(cmd.Cmd):
                 return
 
             instance_id = args[1]
-            key = "{}.{}".format(class_name, instance_id)
-            obj = storage.all().get(key)
 
             class_mapping = {
                 "BaseModel": BaseModel,
@@ -124,7 +122,7 @@ class HBNBCommand(cmd.Cmd):
                 class_type = class_mapping[class_name]
                 instance_objects = [
                     obj for obj in storage.all().values()
-                    if isinstance(obj, class_type)
+                    if isinstance(obj, class_type) and obj.id == instance_id
                     ]
                 if instance_objects:
                     print(instance_objects[0])
